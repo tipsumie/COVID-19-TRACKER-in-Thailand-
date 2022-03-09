@@ -1,25 +1,26 @@
-import { Card, CardContent, FormControl, MenuItem, Select } from '@mui/material';
+import { Card, CardContent, FormControl, MenuItem, Select, Table } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import /* It's a function that takes in a `province` and returns a `component` */
-Map from './Map';
+import Map from './Map';
 import InfoBox from './InfoBox';
 import './App.css';
+//import Table from '../Table';
 
 const App = () => {
   const [provinces, setProvinces] = useState([]);
   const [province, setProvince] = useState("thailand");
   const [provinceInfo, setProvinceInfo] = useState({});
+  const [tableData, setTableData] = useState([]);
 
   useEffect(() => {
     fetch("https://covid19.ddc.moph.go.th/api/Cases/today-cases-all")
       .then((response) => response.json())
       .then((data) => {
-        setProvinceInfo(data);
+        const defaultData = data[0];
 
+        setProvinceInfo(defaultData);
       });
   }, []);
 
-  console.log('data_All...', provinceInfo);
 
   useEffect(() => {
     //async -> send a request, wait for it, do something with 
@@ -30,14 +31,15 @@ const App = () => {
         const provinces = data.map((province) => ({
           name: province.province
         }));
-        setProvinces(provinces);
 
+        setTableData(data)
+        setProvinces(provinces);
       });
    };
   
     getProvincesData();
   }, []); 
-
+console.log('Table.....',tableData);
   const onProvinceChange = async (event) =>{
     const provinceCode = event.target.value;
 
@@ -45,20 +47,30 @@ const App = () => {
       provinceCode === "thailand"
        ? "https://covid19.ddc.moph.go.th/api/Cases/today-cases-all"
        : 'https://covid19.ddc.moph.go.th/api/Cases/today-cases-by-provinces' ;
-  
+    
+      
     await fetch(url)
     .then(response => response.json())
     .then(data => {
-      //find the element with a given name in an array and return just one item (namely the first match).
-      const provinceInfo = data.find(item => item.province === provinceCode);
-
-        setProvince(provinceCode);
-      // All of the data from the province response
-        setProvinceInfo(provinceInfo);
+      
+      if (provinceCode === "thailand") {
+        const provinceInfo = data[0];
+        
+          setProvince(provinceCode);
+        // All of the data from the province response
+          setProvinceInfo(provinceInfo);
+      } else {
+        //find the element with a given name in an array and return just one item (namely the first match).
+        const provinceInfo = data.find(item => item.province === provinceCode);
+          
+          setProvince(provinceCode);
+        // All of the data from the province response
+          setProvinceInfo(provinceInfo);
+      }
         });
     
     };
-  
+    
 
   return (
     <div className="app">
@@ -100,8 +112,7 @@ const App = () => {
       <Card className='app_right'>
         <CardContent>
           <h3>Live New Cases by Province</h3>
-          {/*Table */}
-          <h3>Thailand New Cases</h3>
+          <Table provinces = {tableData} />
           <h3>Thailand New Cases</h3>
           {/*Graph */}
 
