@@ -102,6 +102,7 @@ const App = () => {
           <h3>Live New Cases by Province</h3>
           {/*Table */}
           <h3>Thailand New Cases</h3>
+          <h3>Thailand New Cases</h3>
           {/*Graph */}
 
         </CardContent>
