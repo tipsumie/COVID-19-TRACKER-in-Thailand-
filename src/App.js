@@ -1,9 +1,10 @@
-import { Card, CardContent, FormControl, MenuItem, Select, Table } from '@mui/material';
+import { Card, CardContent, FormControl, MenuItem, Select} from '@mui/material';
 import React, { useEffect, useState } from 'react';
+import Table from './Table';
 import Map from './Map';
 import InfoBox from './InfoBox';
 import './App.css';
-//import Table from '../Table';
+import { sortData } from './Util';
 
 const App = () => {
   const [provinces, setProvinces] = useState([]);
@@ -32,14 +33,15 @@ const App = () => {
           name: province.province
         }));
 
-        setTableData(data)
+        const sortedData = sortData(data);
+        setTableData(sortedData)
         setProvinces(provinces);
       });
    };
   
     getProvincesData();
   }, []); 
-console.log('Table.....',tableData);
+
   const onProvinceChange = async (event) =>{
     const provinceCode = event.target.value;
 
@@ -114,7 +116,7 @@ console.log('Table.....',tableData);
           <h3>Live New Cases by Province</h3>
           <Table provinces = {tableData} />
           <h3>Thailand New Cases</h3>
-          {/*Graph */}
+          Graph
 
         </CardContent>
       </Card>
