@@ -5,6 +5,7 @@ import Map from './Map';
 import InfoBox from './InfoBox';
 import './App.css';
 import { sortData } from './Util';
+import LineGraph from './LineGraph';
 
 const App = () => {
   const [provinces, setProvinces] = useState([]);
@@ -78,10 +79,10 @@ const App = () => {
     <div className="app">
       <div className='app__left'>
         <div className="app__header">
-          <h1>COVID-19 TRACKER in Thailand</h1>
+          <h1>สถานการณ์ผู้ติดเชื้อ COVID-19 ในไทย</h1>
           <FormControl>
             <Select variant="outlined" value={province} onChange={onProvinceChange}>
-              <MenuItem value="thailand">ประเทศไทย</MenuItem>
+              <MenuItem value="thailand">ทั่วประเทศ</MenuItem>
               {provinces.map((province) => (
                 <MenuItem value={province.name}>{province.name}</MenuItem>     // Loop through all the province and show drop down list of the option 
               ))}
@@ -92,17 +93,17 @@ const App = () => {
 
         <div className='app__stats'>
           <InfoBox 
-          title='Coronavirus Cases' 
+          title='ผู้ติดเชื้อรายใหม่' 
           cases={provinceInfo.new_case} 
           total={provinceInfo.total_case} 
           />
           <InfoBox 
-          title='Recovred' 
+          title='รักษาหาย' 
           cases={provinceInfo.new_recovered} 
           total={provinceInfo.total_recovered} 
           />
           <InfoBox 
-          title='Deaths' 
+          title='ผู้เสียชีวิตรายใหม่' 
           cases={provinceInfo.new_death} 
           total={provinceInfo.total_death} 
           />
@@ -112,11 +113,12 @@ const App = () => {
       </div>
       
       <Card className='app_right'>
-        <CardContent>
-          <h3>Live New Cases by Province</h3>
+        <CardContent className='app__information'>
+          <h3>จำนวนผู้ติดเชื้อรายใหม่ แต่ละจังหวัด</h3>
           <Table provinces = {tableData} />
-          <h3>Thailand New Cases</h3>
-          Graph
+          <h3>จำนวนผู้ติดเชื้อรายใหม่ ในไทย</h3>
+          <p>ตั้งแต่วันที่ 01/04/2021 –ปัจจุบัน</p>
+          <LineGraph />
 
         </CardContent>
       </Card>
