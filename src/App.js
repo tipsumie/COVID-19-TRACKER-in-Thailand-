@@ -1,17 +1,20 @@
 import { Card, CardContent, FormControl, MenuItem, Select} from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import Table from './Table';
-import Map from './Map';
 import InfoBox from './InfoBox';
 import './App.css';
 import { sortData } from './Util';
 import LineGraph from './LineGraph';
+import Map from './Map';
+import "leaflet/dist/leaflet.css";
 
 const App = () => {
   const [provinces, setProvinces] = useState([]);
   const [province, setProvince] = useState("thailand");
   const [provinceInfo, setProvinceInfo] = useState({});
   const [tableData, setTableData] = useState([]);
+  const [mapCenter, setMapCenter] = useState({lat:34 , lng:-40 });
+  const [mapZoom, setZoom] = useState(3);
 
   useEffect(() => {
     fetch("https://covid19.ddc.moph.go.th/api/Cases/today-cases-all")
@@ -109,7 +112,11 @@ const App = () => {
           />
         </div>
       
-        <Map/>
+        <Map
+        center= {mapCenter}
+        zoom = {mapZoom}
+        />
+
       </div>
       
       <Card className='app_right'>
