@@ -7,6 +7,7 @@ import { sortData } from './Util';
 import LineGraph from './LineGraph';
 import Map from './Map';
 import "leaflet/dist/leaflet.css";
+import numeral from "numeral";
 
 const App = () => {
   const [provinces, setProvinces] = useState([]);
@@ -15,6 +16,7 @@ const App = () => {
   const [tableData, setTableData] = useState([]);
   const [mapCenter, setMapCenter] = useState([15, 100]); //The location of Bangkok
   const [mapZoom, setMapZoom] = useState(6);
+
 
   useEffect(() => {
     fetch("https://covid19.ddc.moph.go.th/api/Cases/today-cases-all")
@@ -81,13 +83,12 @@ const App = () => {
           return response.json();
         }).then(data => {
             const mapCenter = data.find(item => item.province === provinceCode);
+            const Locations = [mapCenter.lat, mapCenter.lon];
             
-            setMapCenter([mapCenter.lat, mapCenter.lon]);
+            setMapCenter(Locations);
             setMapZoom(9);
 
         });
-        console.log('Center',mapCenter);
-        console.log('Zoom',mapZoom);
     };
 
 
@@ -110,18 +111,18 @@ const App = () => {
         <div className='app__stats'>
           <InfoBox 
           title='ผู้ติดเชื้อรายใหม่' 
-          cases={provinceInfo.new_case} 
-          total={provinceInfo.total_case} 
+          cases={numeral(provinceInfo.new_case).format('0,0')} 
+          total={numeral(provinceInfo.total_case).format('0,0')} 
           />
           <InfoBox 
           title='รักษาหาย' 
-          cases={provinceInfo.new_recovered} 
-          total={provinceInfo.total_recovered} 
+          cases={numeral(provinceInfo.new_recovered).format('0,0')} 
+          total={numeral(provinceInfo.total_recovered).format('0,0')} 
           />
           <InfoBox 
           title='ผู้เสียชีวิตรายใหม่' 
-          cases={provinceInfo.new_death} 
-          total={provinceInfo.total_death} 
+          cases={numeral(provinceInfo.new_death).format('0,0')} 
+          total={numeral(provinceInfo.total_death).format('0,0')} 
           />
         </div>
       

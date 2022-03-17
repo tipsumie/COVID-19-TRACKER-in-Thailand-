@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { AreaChart, Area,  XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
-
 function LineGraph() {
     const [dataTimeline, setDataTimeline] = useState({});
 
