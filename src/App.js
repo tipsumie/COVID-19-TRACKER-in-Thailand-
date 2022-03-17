@@ -13,9 +13,8 @@ const App = () => {
   const [province, setProvince] = useState("thailand");
   const [provinceInfo, setProvinceInfo] = useState({});
   const [tableData, setTableData] = useState([]);
-  const [mapCenter, setMapCenter] = useState([13.72, 100.52]); //[13.72, 100.52] กรุงเทพมหานคร
+  const [mapCenter, setMapCenter] = useState([15, 100]); //The location of Bangkok
   const [mapZoom, setMapZoom] = useState(6);
-
 
   useEffect(() => {
     fetch("https://covid19.ddc.moph.go.th/api/Cases/today-cases-all")
@@ -39,7 +38,7 @@ const App = () => {
         }));
 
         const sortedData = sortData(data);
-        setTableData(sortedData)
+        setTableData(sortedData);
         setProvinces(provinces);
       });
    };
@@ -82,12 +81,13 @@ const App = () => {
           return response.json();
         }).then(data => {
             const mapCenter = data.find(item => item.province === provinceCode);
-              const mapLocation = [mapCenter.lat, mapCenter.lon];
+            
+            setMapCenter([mapCenter.lat, mapCenter.lon]);
+            setMapZoom(9);
 
-              setMapCenter(mapLocation);
-              setMapZoom(9);
         });
-        
+        console.log('Center',mapCenter);
+        console.log('Zoom',mapZoom);
     };
 
 

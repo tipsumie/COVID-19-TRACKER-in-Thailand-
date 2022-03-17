@@ -4,11 +4,11 @@ import './Table.css';
 function Table ({ provinces }) {
   return (
   <div className='table'>
-        {provinces.map(({province, total_case}) => (
+        {provinces.map(({province, new_case}) => (
             <tr>
                 <td>{province}</td>
                 <td>
-                    <strong>{total_case}</strong>
+                    <strong>{new_case}</strong>
                 </td>
             </tr>
         ))}
