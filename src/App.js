@@ -14,7 +14,7 @@ const App = () => {
   const [province, setProvince] = useState("thailand");
   const [provinceInfo, setProvinceInfo] = useState({});
   const [tableData, setTableData] = useState([]);
-  const [mapCenter, setMapCenter] = useState([15, 100]); //The location of Bangkok
+  const [mapCenter, setMapCenter] = useState([15, 100]); //The location of Thailand
   const [mapZoom, setMapZoom] = useState(6);
 
 
@@ -109,17 +109,17 @@ const App = () => {
        </div>
 
         <div className='app__stats'>
-          <InfoBox 
+          <InfoBox className ="newCase"
           title='ผู้ติดเชื้อรายใหม่' 
           cases={numeral(provinceInfo.new_case).format('0,0')} 
           total={numeral(provinceInfo.total_case).format('0,0')} 
           />
-          <InfoBox 
+          <InfoBox className ="newRecovered"
           title='รักษาหาย' 
           cases={numeral(provinceInfo.new_recovered).format('0,0')} 
           total={numeral(provinceInfo.total_recovered).format('0,0')} 
           />
-          <InfoBox 
+          <InfoBox className ="newDeath"
           title='ผู้เสียชีวิตรายใหม่' 
           cases={numeral(provinceInfo.new_death).format('0,0')} 
           total={numeral(provinceInfo.total_death).format('0,0')} 
