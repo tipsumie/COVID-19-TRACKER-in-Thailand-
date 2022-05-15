@@ -1,6 +1,6 @@
 import React from 'react';
-import { MapContainer , TileLayer, useMap, Marker, Popup, CircleMarker } from "react-leaflet"
-import "./Map.css";
+import { MapContainer, TileLayer, useMap, Popup } from 'react-leaflet';
+import './Map.css';
 import Leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
@@ -12,7 +12,7 @@ let DefaultIcon = Leaflet.icon({
   iconAnchor: [10, 41],
   popupAnchor: [2, -40],
   iconUrl: icon,
-  shadowUrl: iconShadow
+  shadowUrl: iconShadow,
 });
 Leaflet.Marker.prototype.options.icon = DefaultIcon;
 
@@ -22,36 +22,57 @@ function ChangeView({ center, zoom }) {
   return null;
 }
 
-function Map({center, zoom}) {
+function Map({ center, zoom, province, new_case, new_death }) {
   return (
     <div className='map'>
       <MapContainer center={center} zoom={zoom}>
-      <ChangeView center={center} zoom={zoom} /> 
+        <ChangeView center={center} zoom={zoom} />
         <TileLayer
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
         />
-          {/* <Marker position={center}>
-            <Popup>ที่นี่</Popup>
-          </Marker> */}
-          <Marker position={center} draggable="True" pane="popupPane" >
-          </Marker>
-          <CircleMarker
-          center={center}
-          color='green'
-          fillColor='red'
-          radius={20}
-          fillOpacity={0.5}
-          stroke={false}
->
-              <Popup>
-                <span>A pretty CSS3 popup. <br/> Easily customizable.</span>
-              </Popup>
-          </CircleMarker>
-    
+
+        <Popup position={center}>
+          <span
+            style={{
+              fontWeight: 'bold',
+              fontSize: '15px',
+              display: 'flex',
+              justifyContent: 'center',
+              marginBottom: '3px',
+            }}
+          >
+            {province}
+          </span>
+          <span>
+            ผู้ติดเชื้อรายวัน{' '}
+            <span
+              style={{
+                color: '#ffe245',
+                fontWeight: 'bold',
+                fontSize: '15px',
+              }}
+            >
+              +{new_case}
+            </span>
+          </span>
+          <br />
+          <span>
+            ผู้เสียชีวิตรายวัน{' '}
+            <span
+              style={{
+                color: '#4e0044',
+                fontWeight: 'bold',
+                fontSize: '15px',
+              }}
+            >
+              +{new_death}
+            </span>
+          </span>
+        </Popup>
       </MapContainer>
     </div>
   );
 }
 
-export default Map
+export default Map;

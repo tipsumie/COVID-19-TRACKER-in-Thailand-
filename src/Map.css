@@ -11,3 +11,9 @@
     height: 100%;
 }
 
+.leaflet-popup-content-wrapper {
+    padding: 2px !important;
+    color: #ffff !important;
+    text-align: center;
+    background-color: #f95a5c !important;
+}
